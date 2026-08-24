@@ -1,0 +1,377 @@
+<title>AI 브리핑 2026.08.24</title>
+
+<style>
+  :root {
+    --ground:  #EDEFF2;
+    --surface: #F8F9FA;
+    --sunken:  #E1E5EA;
+    --ink:     #131A21;
+    --muted:   #59636D;
+    --line:    #CFD5DC;
+    --accent:  #1E5C9E;
+    --signal:  #B3521A;
+    --shadow:  0 1px 2px rgba(19,26,33,.07);
+    --sans: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif;
+    --mono: Consolas, "D2Coding", ui-monospace, monospace;
+    --measure: 66ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:  #11161B;
+      --surface: #191F25;
+      --sunken:  #0C1015;
+      --ink:     #E5E9EC;
+      --muted:   #98A3AD;
+      --line:    #2A333B;
+      --accent:  #6FAEE8;
+      --signal:  #E0985C;
+      --shadow:  0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #11161B;
+    --surface: #191F25;
+    --sunken:  #0C1015;
+    --ink:     #E5E9EC;
+    --muted:   #98A3AD;
+    --line:    #2A333B;
+    --accent:  #6FAEE8;
+    --signal:  #E0985C;
+    --shadow:  0 1px 2px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0 20px 88px;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 52px; }
+
+  h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.02em; text-wrap: balance; }
+  h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.25; }
+  h2 { font-size: 19px; line-height: 1.45; }
+  p { margin: 0; max-width: var(--measure); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  header { padding-top: 64px; display: flex; flex-direction: column; gap: 22px; }
+  .masthead { display: flex; flex-direction: column; gap: 10px; }
+  .masthead .bar { height: 3px; width: 48px; background: var(--accent); }
+
+  .topline {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .topline > div { padding: 20px 22px; display: flex; flex-direction: column; gap: 7px; }
+  .topline > div + div { border-top: 1px solid var(--line); }
+  .topline .headline { font-size: 17px; font-weight: 700; line-height: 1.55; }
+  .topline .todo { font-size: 16px; line-height: 1.6; }
+  .topline .todo strong { color: var(--signal); }
+
+  .items { display: flex; flex-direction: column; }
+  .entry {
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .entry:last-child { border-bottom: 1px solid var(--line); }
+  .entry-head { display: flex; flex-direction: column; gap: 9px; }
+  .entry p { font-size: 15.5px; }
+
+  .badge {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .07em;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .badge.now   { color: var(--signal); }
+  .badge.later { color: var(--accent); }
+  .badge.know  { color: var(--muted); }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .quote {
+    border-left: 2px solid var(--line);
+    padding-left: 14px;
+    color: var(--muted);
+    font-size: 14.5px;
+    max-width: var(--measure);
+  }
+
+  .demo {
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .demo .lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 14px 0;
+  }
+  .demo pre {
+    margin: 0;
+    padding: 6px 14px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--ink);
+  }
+
+  code.inline {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1px 5px;
+  }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 14.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); font-weight: 400; background: var(--sunken);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-variant-numeric: tabular-nums; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  footer ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--muted); display: flex; flex-direction: column; gap: 5px; }
+  footer p { font-size: 13.5px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="masthead">
+      <p class="eyebrow">AI 브리핑 · 2호 · 2026.08.24 · 지난 한 주</p>
+      <h1>도구가 아니라<br>‘쓰는 법’이 정리된 주</h1>
+      <div class="bar"></div>
+    </div>
+
+    <div class="topline">
+      <div>
+        <p class="eyebrow">한 줄 요약</p>
+        <p class="headline">새 모델도, 화제의 신기능도 없었습니다. 대신 <strong>말 짧게 시키는 스위치</strong>가 생겼고, <strong>무료 공식 강의 사이트</strong>가 열렸고, <strong>이 브리핑을 매주 자동으로 받는 방법</strong>이 확인됐습니다. 셋 다 “새로 배울 것”이 아니라 “이미 쓰는 걸 덜 피곤하게 쓰는 것”입니다.</p>
+      </div>
+      <div>
+        <p class="eyebrow">이번 주에 딱 하나만</p>
+        <p class="todo"><strong>답변을 짧게 바꾸세요. 30초짜리입니다.</strong> Claude Code 대화창에 <code class="inline">/config</code> → <em>Output style</em> → <strong>Concise</strong>. 서론과 중계방송이 사라지고 결과부터 나옵니다. 일은 똑같이 꼼꼼하게 합니다.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="items">
+
+    <!-- 1 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge now">지금 바로</span>
+        <h2>“Concise” — AI가 말을 줄이게 하는 공식 스위치</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>말 많은 직원에게 <strong>“결론부터 말해”라고 한 번 정해두는 것</strong>과 같습니다. 8월 20일 업데이트(버전 2.1.237)로 Claude Code에 <strong>출력 스타일</strong>(대답하는 말투를 고르는 설정) 중 <em>Concise</em>(간결)가 기본 항목으로 들어왔습니다. “이제 파일을 열어보겠습니다…” 같은 중계방송과 요약 해설을 빼고 결과부터 말합니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 떴냐</p>
+        <p>지난 호에서 다룬 “AI가 한 번에 너무 많이 쏟아낸다”와 뿌리가 같습니다. 코드만 많이 나오는 게 아니라 <strong>읽어야 할 글도 같이 많아지는데</strong>, 그 글의 대부분은 정작 판단에 필요 없는 중계였습니다. 공식 설명에도 “결과를 먼저 내놓고 서론과 나레이션은 생략하되, 일은 똑같이 철저히 한다”고 적혀 있습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>코드를 못 읽는 사람일수록 <strong>이득이 큽니다.</strong> 어차피 안 읽고 넘기던 설명이 줄면, 진짜로 봐야 하는 한 줄(무엇을 바꿨는지, 뭐가 안 됐는지)이 눈에 들어옵니다. 안 맞으면 같은 자리에서 되돌리면 됩니다.</p>
+      </div>
+      <div class="demo">
+        <p class="lbl">이렇게 켭니다</p>
+<pre>/config          ← 대화창에 그냥 치세요
+  → Output style ← 이 항목을 찾아서
+  → Concise      ← 선택하면 끝
+
+※ 되돌리려면 같은 자리에서 Default 선택</pre>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge now">지금 바로</span>
+        <h2>이 브리핑, 매주 알아서 만들게 할 수 있습니다 — ‘루틴’</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p><strong>루틴(Routine)</strong>은 “매주 월요일 아침에 이 일을 해놔”라고 한 번 걸어두는 예약입니다. 핵심은 이게 <strong>내 PC가 아니라 Anthropic 서버에서 돈다</strong>는 점입니다. 노트북을 닫아놔도, 꺼놔도 실행됩니다. 총론의 여섯 묶음 중 <strong>‘조직’</strong>에 해당합니다 — AI에게 <em>무엇을</em> 시킬지가 아니라 <em>언제</em> 일할지를 정해주는 층입니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 떴냐</p>
+        <p>지금까지 “AI에게 반복 작업을 맡긴다”는 말은 실제로는 <strong>내가 매번 앉아서 시작 버튼을 누르는 것</strong>이었습니다. 지금 이 브리핑도 그렇습니다. 예약 실행이 붙으면서 “내가 여는 순간에만 시작된다”는 제약이 없어졌습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>바로 이 주간 브리핑이 <strong>1순위 후보</strong>입니다. 다만 걸림돌이 하나 있습니다 — 클라우드에서 도는 루틴은 <strong>내 PC 폴더에 파일을 저장할 수 없습니다.</strong> 그래서 “결과물을 어디로 받을지”를 먼저 정해야 합니다.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">알아둘 제약</th><th scope="col">뜻</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>최소 1시간 간격</td><td>1분마다·5분마다는 거부됩니다. 주 1회는 문제없음</td></tr>
+            <tr><td>시간은 UTC 기준</td><td>한국시간 −9시간. 한국 월요일 오전 9시 = UTC 월요일 0시</td></tr>
+            <tr><td>내 PC 파일 접근 불가</td><td>결과는 GitHub 저장소나 카카오톡 ‘나에게 보내기’로 받아야 함</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="demo">
+        <p class="lbl">이렇게 물어보세요 (그대로 복사)</p>
+<pre>매주 월요일 한국시간 오전 9시에 /ai-brief 를 자동으로
+실행하는 루틴을 만들어줘.
+
+결과물은 내 PC에 저장하지 말고,
+3줄 요약을 카카오톡 "나에게 보내기"로 보내줘.
+
+만들기 전에 어떤 설정으로 걸 건지 3줄로 먼저 알려주고,
+내가 동의하면 그때 만들어.</pre>
+      </div>
+      <p class="quote">주의 — 루틴은 “걸어두면 알아서 잘 되는 것”이 아닙니다. 초기 몇 주는 결과를 직접 확인하세요. 프롬프트가 조금만 어긋나도 매주 어긋난 결과가 쌓입니다.</p>
+    </div>
+
+    <!-- 3 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge later">나중에</span>
+        <h2>Anthropic이 무료 강의 사이트를 열었습니다 — 비개발자 트랙 있음</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>8월 20일 <strong>Claude Academy</strong>(<code class="inline">academy.claude.com</code>)가 열렸습니다. 강의 22개, 튜토리얼 119개, 실제 사용 사례 148개. <strong>전부 무료</strong>이고 로그인 없이도 읽을 수 있습니다. 로그인하면 진도가 저장되고 수료 배지를 받습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 이게 당신한테 맞냐</p>
+        <p>대부분의 “Claude 강의”는 개발자용인데, 여기엔 <strong>비개발자용 트랙이 따로 있습니다.</strong> 뼈대가 되는 <strong>4D 프레임</strong>(위임 Delegation · 서술 Description · 분별 Discernment · 성실 Diligence)은 코딩 얘기가 아니라 <em>“AI에게 뭘 맡기고, 어떻게 설명하고, 결과를 어떻게 의심할지”</em>에 대한 틀입니다. 지난 호에서 “겉보기 멀쩡한 거대한 결과물”을 경계하라고 했던 게 정확히 세 번째 D(분별)입니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>솔직히 <strong>이번 주에 뭐가 만들어지지는 않습니다.</strong> 그래서 ‘나중에’입니다. 다만 한 시간 짬이 날 때 열어볼 자료로는 지금 나와 있는 것 중 가장 낫습니다 — 남이 쓴 블로그 글이 아니라 만든 회사가 직접 쓴 것이고, 공짜입니다.</p>
+      </div>
+      <div class="demo">
+        <p class="lbl">이 순서로 보세요 (개발자용 강의는 건너뛰세요)</p>
+<pre>1. Claude 101              ← 일상 업무용 기본
+2. AI Fluency: Framework   ← 4D 프레임. 이게 핵심
+3. Claude Code 101         ← 지금 쓰는 도구 정리편
+
+academy.claude.com  ← 로그인 없이 먼저 훑어봐도 됩니다</pre>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge know">알기만</span>
+        <h2>AI가 화면을 직접 보고 클릭하는 기능이 ‘정식’이 됐습니다</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>같은 날(8월 20일) Anthropic이 <strong>컴퓨터 사용</strong>(화면을 보고 마우스·키보드를 직접 움직임)과 <strong>브라우저 사용</strong>(웹사이트를 직접 돌아다님)을 시험 단계에서 <strong>정식</strong>으로 올렸습니다. 총론의 <strong>‘행동’</strong> 묶음이 한 칸 넓어진 겁니다 — 지금까지 AI의 손은 파일과 명령어까지였는데, 이제 화면 자체가 손 닿는 범위에 들어왔습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 지금은 할 일이 없냐</p>
+        <p>이건 <strong>프로그램을 만드는 사람들이 쓰는 부품</strong>으로 풀린 것이지, 당신 화면에 버튼이 생긴 게 아닙니다. 오늘 “대신 예약해줘”라고 시킬 수 있는 건 아닙니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">그래도 기억해둘 것</p>
+        <p>‘시험판’과 ‘정식’의 차이는 <strong>회사들이 실제 서비스에 넣기 시작한다</strong>는 뜻입니다. 몇 달 안에 여러 서비스에서 “대신 사이트 들어가서 처리하고 결과 가져오기”가 평범한 기능으로 등장할 겁니다. 그때 진짜 질문은 <strong>“내 계정으로 대신 들어가게 둘 것이냐”</strong>가 됩니다 — 총론의 ‘신뢰’ 묶음 문제로 넘어갑니다.</p>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge know">알기만</span>
+        <h2>지난 호 그거 — 윈도우 손질은 이번 주에도 계속됐습니다</h2>
+      </div>
+      <div class="field">
+        <p class="k">뭐가 바뀌었냐</p>
+        <p>지난 호에서 “8월 업데이트는 윈도우 사용자용”이라고 했는데 그 흐름이 이어졌습니다. 이번 주 변경 중 당신이 체감할 만한 셋입니다.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">바뀐 것</th><th scope="col">체감</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>사용 한도 리셋 시 자동 이어하기</td><td>한도에 걸려 멈춰도 풀리면 알아서 이어서 진행 (<code class="inline">/config</code>에서 끌 수 있음)</td></tr>
+            <tr><td>맞춤법 검사 (선택)</td><td>프롬프트 입력창에서 오타에 밑줄</td></tr>
+            <tr><td>윈도우 세션 간 메시지</td><td>여러 창을 띄워놨을 때 서로 말을 걸 수 있음 — 지금은 몰라도 됨</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>할 일은 지난 호와 같습니다 — <strong>업데이트만 하면 됩니다.</strong> 나머지 수십 개 수정은 전부 조용히 적용됩니다.</p>
+      </div>
+      <div class="demo">
+        <p class="lbl">확인만 해보세요</p>
+<pre>/status   ← 지금 버전 확인 (2.1.241이면 최신)
+/doctor   ← 문제 있으면 뭐가 문제인지 알려줌</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="eyebrow">출처</p>
+    <ul>
+      <li>Claude Code 공식 체인지로그 (2.1.235 ~ 2.1.241, 8/18–8/23) — <a href="https://code.claude.com/docs/en/changelog">code.claude.com/docs/en/changelog</a></li>
+      <li>Anthropic 공식 발표: 컴퓨터 사용 · Skills API · Files API 정식 출시 (8/20) — <a href="https://claude.com/blog/computer-use-skills-api-files-api">claude.com/blog/computer-use-skills-api-files-api</a></li>
+      <li>Claude Academy — <a href="https://academy.claude.com">academy.claude.com</a></li>
+      <li>Claude Academy와 4D 프레임 정리 (8/20) — <a href="https://explainx.ai/blog/claude-academy-launch-4d-ai-fluency-framework-august-2026">explainx.ai</a></li>
+      <li>Claude Code 루틴(예약 실행) 가이드 — <a href="https://makerkit.dev/blog/tutorials/claude-code-routines-guide">makerkit.dev</a>, <a href="https://www.mindstudio.ai/blog/claude-code-routines-scheduled-agents">mindstudio.ai</a></li>
+      <li>주간 AI 에이전트 동향 (8월 22일 주) — <a href="https://aiagentstore.ai/ai-agent-news/this-week">aiagentstore.ai</a></li>
+    </ul>
+    <p>2호 · 2026년 8월 24일 작성. 이번 주는 새 모델이나 대형 발표가 없어 <strong>억지로 채우지 않고 실제로 확인된 것만</strong> 실었습니다. 버전 번호와 날짜는 공식 체인지로그 기준입니다. 루틴의 제약(1시간 간격 · UTC 기준 · 로컬 파일 접근 불가)은 공식 문서와 가이드에서 확인했으나, 카카오톡 전송은 커넥터 연결 상태에 따라 달라질 수 있습니다.</p>
+  </footer>
+
+</div>

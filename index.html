@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 브리핑</title>
+
+<style>
+  :root {
+    --ground:  #EDEFF2;
+    --surface: #F8F9FA;
+    --sunken:  #E1E5EA;
+    --ink:     #131A21;
+    --muted:   #59636D;
+    --line:    #CFD5DC;
+    --accent:  #1E5C9E;
+    --signal:  #B3521A;
+    --shadow:  0 1px 2px rgba(19,26,33,.07);
+    --sans: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif;
+    --mono: Consolas, "D2Coding", ui-monospace, monospace;
+    --measure: 66ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:  #11161B;
+      --surface: #191F25;
+      --sunken:  #0C1015;
+      --ink:     #E5E9EC;
+      --muted:   #98A3AD;
+      --line:    #2A333B;
+      --accent:  #6FAEE8;
+      --signal:  #E0985C;
+      --shadow:  0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #11161B;
+    --surface: #191F25;
+    --sunken:  #0C1015;
+    --ink:     #E5E9EC;
+    --muted:   #98A3AD;
+    --line:    #2A333B;
+    --accent:  #6FAEE8;
+    --signal:  #E0985C;
+    --shadow:  0 1px 2px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0 20px 88px;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px; }
+
+  h1, h2 { margin: 0; font-weight: 700; letter-spacing: -.02em; text-wrap: balance; }
+  h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.25; }
+  h2 { font-size: 13px; }
+  p { margin: 0; max-width: var(--measure); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  header { padding-top: 64px; display: flex; flex-direction: column; gap: 14px; }
+  header .bar { height: 3px; width: 48px; background: var(--accent); }
+  header p.lede { font-size: 16px; color: var(--muted); }
+
+  .section { display: flex; flex-direction: column; gap: 14px; }
+  .section > h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card .t { font-size: 17px; font-weight: 700; }
+  .card p { font-size: 14.5px; color: var(--muted); }
+
+  ul.issues { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  ul.issues li {
+    border-bottom: 1px solid var(--line);
+    padding: 15px 2px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+  }
+  ul.issues .no {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--muted);
+    min-width: 74px;
+    font-variant-numeric: tabular-nums;
+  }
+  ul.issues .ti { font-size: 15.5px; font-weight: 700; flex: 1 1 260px; }
+  ul.issues .ti a { text-decoration: none; }
+  ul.issues .ti a:hover { text-decoration: underline; }
+  ul.issues .sub { font-size: 13.5px; color: var(--muted); flex: 1 1 100%; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  footer p { font-size: 13.5px; color: var(--muted); }
+  code.inline {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1px 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">비개발자를 위한 주간 정리</p>
+    <h1>AI 브리핑</h1>
+    <div class="bar"></div>
+    <p class="lede">AI 코딩 도구가 이번 주에 뭐가 달라졌는지, 그중에 <strong>내가 실제로 써먹을 게 뭔지</strong>만 골라 정리합니다. 매주 월요일 아침 자동 발행.</p>
+  </header>
+
+  <div class="section">
+    <h2>먼저 읽을 것</h2>
+    <div class="card">
+      <div class="t"><a href="ai-foundations.html">기초 총론 — 용어와 연표</a></div>
+      <p>매주 바뀌는 이야기 말고, 안 바뀌는 바탕. 용어 사전 여섯 묶음(재료·대화·지식·행동·조직·신뢰)과 연표. 갱신하지 않는 문서라 한 번 읽어두면 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>지난 호</h2>
+    <ul class="issues">
+      <li>
+        <span class="no">2호 · 08.24</span>
+        <span class="ti"><a href="ai-brief/2026-08-24.html">도구가 아니라 ‘쓰는 법’이 정리된 주</a></span>
+        <span class="sub">말 짧게 시키는 스위치(Concise) · 브리핑 자동 예약(루틴) · 무료 공식 강의 사이트</span>
+      </li>
+      <li>
+        <span class="no">1호 · 08.18</span>
+        <span class="ti"><a href="ai-brief/2026-08-18.html">“새 기능”보다 “고르는 눈”이 필요한 주</a></span>
+        <span class="sub">모델 1등 싸움 종료 · 스킬 수천 개와 못 믿을 설치 수 · 겉보기 멀쩡한 거대 결과물 경고</span>
+      </li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>매주 월요일 오전 9시(한국시간)에 클라우드에서 자동 실행됩니다. 형식을 바꾸려면 저장소의 <code class="inline">brief-instructions.md</code>를 고치세요.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

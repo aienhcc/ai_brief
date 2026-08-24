@@ -1,0 +1,353 @@
+<title>AI 브리핑 2026.08.18</title>
+<style>
+  :root {
+    --ground:  #EDEFF2;
+    --surface: #F8F9FA;
+    --sunken:  #E1E5EA;
+    --ink:     #131A21;
+    --muted:   #59636D;
+    --line:    #CFD5DC;
+    --accent:  #1E5C9E;
+    --signal:  #B3521A;
+    --shadow:  0 1px 2px rgba(19,26,33,.07);
+
+    --sans: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Segoe UI", system-ui, sans-serif;
+    --mono: Consolas, "D2Coding", ui-monospace, monospace;
+    --measure: 66ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:  #11161B;
+      --surface: #191F25;
+      --sunken:  #0C1015;
+      --ink:     #E5E9EC;
+      --muted:   #98A3AD;
+      --line:    #2A333B;
+      --accent:  #6FAEE8;
+      --signal:  #E0985C;
+      --shadow:  0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #11161B;
+    --surface: #191F25;
+    --sunken:  #0C1015;
+    --ink:     #E5E9EC;
+    --muted:   #98A3AD;
+    --line:    #2A333B;
+    --accent:  #6FAEE8;
+    --signal:  #E0985C;
+    --shadow:  0 1px 2px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0 20px 88px;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 52px; }
+
+  h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.02em; text-wrap: balance; }
+  h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.25; }
+  h2 { font-size: 19px; line-height: 1.45; }
+  p { margin: 0; max-width: var(--measure); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  header { padding-top: 64px; display: flex; flex-direction: column; gap: 22px; }
+  .masthead { display: flex; flex-direction: column; gap: 10px; }
+  .masthead .bar { height: 3px; width: 48px; background: var(--accent); }
+
+  .topline {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .topline > div { padding: 20px 22px; display: flex; flex-direction: column; gap: 7px; }
+  .topline > div + div { border-top: 1px solid var(--line); }
+  .topline .headline { font-size: 17px; font-weight: 700; line-height: 1.55; }
+  .topline .todo { font-size: 16px; line-height: 1.6; }
+  .topline .todo strong { color: var(--signal); }
+
+  .items { display: flex; flex-direction: column; }
+  .entry {
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .entry:last-child { border-bottom: 1px solid var(--line); }
+  .entry-head { display: flex; flex-direction: column; gap: 9px; }
+  .entry p { font-size: 15.5px; }
+
+  .badge {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .07em;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .badge.now  { color: var(--signal); }
+  .badge.know { color: var(--muted); }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .quote {
+    border-left: 2px solid var(--line);
+    padding-left: 14px;
+    color: var(--muted);
+    font-size: 14.5px;
+    max-width: var(--measure);
+  }
+
+  .demo {
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .demo .lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 14px 0;
+  }
+  .demo pre {
+    margin: 0;
+    padding: 6px 14px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--ink);
+  }
+
+  code.inline {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1px 5px;
+  }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 14.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  thead th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); font-weight: 400; background: var(--sunken);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-variant-numeric: tabular-nums; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  footer ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--muted); display: flex; flex-direction: column; gap: 5px; }
+  footer p { font-size: 13.5px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="masthead">
+      <p class="eyebrow">AI 브리핑 · 1호 · 2026.08.18 · 최근 2주</p>
+      <h1>이번 주는 “새 기능”보다<br>“고르는 눈”이 필요한 주</h1>
+      <div class="bar"></div>
+    </div>
+
+    <div class="topline">
+      <div>
+        <p class="eyebrow">한 줄 요약</p>
+        <p class="headline">도구 경쟁은 사실상 무승부로 정리됐고, 대신 <strong>스킬이 수천 개로 불어나면서 “뭘 깔지”가 새 문제</strong>가 됐습니다. 동시에 “AI가 한 번에 너무 많이 만들어놔서 나중에 손 못 댄다”는 경고가 여러 곳에서 나왔습니다.</p>
+      </div>
+      <div>
+        <p class="eyebrow">이번 주에 딱 하나만</p>
+        <p class="todo"><strong>“한 번에 다 만들어줘”를 끊으세요.</strong> 다음 작업부터는 만들기 전에 <code class="inline">/grill-me</code>로 기획을 굳히고, 한 번에 <strong>화면 하나 / 기능 하나</strong>씩만 시키세요. 이번 호의 3번 항목이 그 이유입니다.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="items">
+
+    <!-- 1 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge know">알기만</span>
+        <h2>모델 1등 싸움은 끝났습니다 — 소수점 차이</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>코딩 실력을 재는 시험(Terminal-Bench 2.1)에서 GPT-5.6 Sol이 89.5%, Claude Opus 5가 89.1%를 기록했습니다. 0.4%p 차이는 <strong>사람이 체감할 수 있는 차이가 아닙니다.</strong> 두 도구 모두 이미 그 모델을 기본값으로 쓰고 있습니다(Codex는 7월 9일부터, Claude Code는 7월 24일부터).</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>“어느 AI가 더 잘해요?”를 검색하는 데 쓰는 시간이 <strong>가장 낭비</strong>라는 뜻입니다. 같은 모델이라도 지시를 어떻게 주느냐에서 나는 차이가 저 0.4%p보다 훨씬 큽니다. 모델 갈아타지 말고, 쓰던 걸 계속 쓰세요.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">모델</th><th scope="col">Terminal-Bench 2.1</th><th scope="col">어디 기본값</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GPT-5.6 Sol</td><td class="num">89.5%</td><td>Codex (7/9~)</td></tr>
+            <tr><td>Claude Opus 5</td><td class="num">89.1%</td><td>Claude Code (7/24~)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge now">지금 바로</span>
+        <h2>스킬이 수천 개가 됐고, 설치 수 숫자는 믿을 게 못 됩니다</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>스킬(AI에게 특정 작업 요령을 알려주는 폴더) 목록 사이트가 1,000개를 넘겼고, 대표 모음집들이 GitHub 별을 수십만 개씩 받고 있습니다. 최근 뜨는 것들은 영상·설계도·집중력 보조처럼 <strong>코딩이 아닌 쪽</strong>으로 번지고 있습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 중요하냐</p>
+        <p class="quote">같은 스킬을 두고 어떤 사이트는 “80만 설치”, 어떤 사이트는 “764 설치”라고 씁니다. <strong>집계 기준이 제각각이라 숫자 자체가 의미가 없습니다.</strong> 순위표를 보고 고르면 광고를 보고 고르는 것과 같습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>고르는 기준을 숫자에서 <strong>“내가 지난달에 실제로 짜증났던 일”</strong>로 바꾸세요. 스킬은 많이 깔수록 좋아지는 게 아니라, 안 쓰는 게 깔려 있으면 AI가 엉뚱한 걸 꺼내 써서 오히려 나빠집니다. 다섯 개 넘기지 마세요.</p>
+      </div>
+      <div class="demo">
+        <div class="lbl">고를 때 이렇게 물어보세요</div>
+<pre>"내가 최근에 반복해서 겪은 불편은 이거야: (예 - 만들고 나면
+ 내가 원한 게 아니어서 갈아엎는 일이 잦다)
+ 이걸 해결해주는 스킬이 실제로 있는지 찾아보고,
+ 없으면 나한테 맞는 스킬을 직접 하나 만들어줘."
+
+스킬 설치는 폴더 하나 넣는 게 전부입니다:
+  C:\Users\CKS\.claude\skills\  ← 여기에 스킬 폴더를 넣고
+  Claude Code를 껐다 켜면 끝.</pre>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge now">지금 바로</span>
+        <h2>“겉보기 멀쩡한 거대한 결과물” 경고가 나왔습니다</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>AI가 한 번에 아주 많은 코드를 쏟아내면, 당장은 잘 돌아가는 것처럼 보이지만 <strong>나중에 아무도(AI 포함) 손댈 수 없는 덩어리</strong>가 된다는 지적이 이번 주 여러 곳에서 나왔습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">왜 당신에게 특히 중요하냐</p>
+        <p>코드를 못 읽으면 “잘 돌아가는 것”과 “잘 만든 것”을 구분할 방법이 화면밖에 없습니다. 그래서 비개발자가 이 함정에 가장 잘 빠집니다. 3주쯤 뒤 “색깔만 바꿔줘” 같은 부탁에 AI가 엉뚱한 데를 건드리기 시작하면 이미 늦은 겁니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">예방법 — 규칙 세 줄</p>
+        <p>완벽한 해법은 없지만, 아래 세 가지만 지켜도 대부분 막힙니다.</p>
+      </div>
+      <div class="demo">
+        <div class="lbl">CLAUDE.md에 붙여넣으세요</div>
+<pre>## 작업 방식 규칙
+1. 한 번에 화면 하나 또는 기능 하나만 만든다.
+   여러 개를 동시에 만들지 않는다.
+2. 파일 하나가 300줄을 넘어가면 먼저 알려주고,
+   나눌지 말지 나에게 물어본다.
+3. 작업을 시작하기 전에 "무엇을 바꿀 것인지" 3줄로
+   먼저 말하고, 내가 동의하면 그때 만든다.</pre>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge now">지금 바로</span>
+        <h2>Claude Code 8월 업데이트는 ‘윈도우 사용자용’ 이었습니다</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>화려한 신기능 없이 안정화 위주였는데, 하필 그 안정화가 <strong>윈도우 시작 문제, 윈도우 경로 처리, 백그라운드 작업, 권한·연결 처리</strong>였습니다. 여기에 VS Code용 새 화면(Focus view)이 붙었습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">나한테 쓸모</p>
+        <p>윈도우 11을 쓰고 계시니 그대로 이득입니다. 할 일은 하나 — <strong>업데이트만 하면 됩니다.</strong> 그동안 “가끔 멈추네?” 싶었던 게 조용히 없어졌을 가능성이 큽니다.</p>
+      </div>
+      <div class="demo">
+        <div class="lbl">이렇게 확인하세요</div>
+<pre>대화창에 그냥 이렇게 치면 됩니다:
+
+  /status      ← 지금 버전 확인
+  /doctor      ← 문제 있으면 뭐가 문제인지 알려줌
+
+업데이트는 보통 자동입니다. 안 되면 그냥
+"Claude Code 최신 버전으로 업데이트하는 법 알려줘" 라고 물어보세요.</pre>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="entry">
+      <div class="entry-head">
+        <span class="badge know">알기만</span>
+        <h2>가격이 내려가고 있습니다 (GPT-5.6 Luna 약 80% 인하)</h2>
+      </div>
+      <div class="field">
+        <p class="k">이게 뭐냐</p>
+        <p>OpenAI가 저가형 모델 가격을 크게 내렸습니다. 직접 API를 쓰는 사람 얘기라 지금 당장 체감할 일은 없습니다.</p>
+      </div>
+      <div class="field">
+        <p class="k">기억해둘 점</p>
+        <p>“많이 돌릴수록 비싸서 못 한다”던 것들이 하나씩 가능해진다는 신호입니다. 지난 지형도에서 <strong>랄프 루프</strong>(될 때까지 무한 반복)를 “돈 태우는 방식이라 비추”라고 했는데, 이 흐름이 계속되면 몇 달 뒤엔 그 판단이 바뀔 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="eyebrow">출처</p>
+    <ul>
+      <li>Claude Code 공식 What's New / Changelog — code.claude.com/docs/en/whats-new</li>
+      <li>Best AI Coding Agents 스코어보드 (2026년 8월) — morphllm.com/best-ai-coding-agents-2026</li>
+      <li>AI Agents News, Week of August 16, 2026 — aiagentstore.ai</li>
+      <li>Claude Code 스킬 생태계 집계 — composio awesome-claude-skills, 각 스킬 디렉터리</li>
+      <li>Daily AI Dispatch, 2026년 8월 13일</li>
+    </ul>
+    <p>1호 · 2026년 8월 18일 작성. 숫자와 날짜는 위 출처의 보도 기준이며, 순위·설치 수 집계는 사이트마다 다릅니다. 다음 호에서는 이번 호에 다룬 것 중 실제로 바뀐 게 있으면 짧게 업데이트합니다.</p>
+  </footer>
+
+</div>
